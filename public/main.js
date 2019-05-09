@@ -15,19 +15,25 @@ const face = [
   { rank: 'Queen', value: 10 },
   { rank: 'King', value: 10 }
 ]
-
+/*
+const playerHand = []
+const dealerHand = []
+*/
 const main = () => {
+  makeDeck()
+  shuffle()
+  dealCardToPlayer()
+  dealCardToPlayer()
+  dealCardToDealer()
+  dealCardToDealer()
+}
+
+const makeDeck = () => {
   for (let i = 0; i < suit.length; i++) {
     for (let j = 0; j < face.length; j++) {
       deck.push(face[j].rank + ' ' + 'of' + ' ' + suit[i])
     }
   }
-  shuffle()
-}
-
-const drawCard = () => {
-  document.querySelector('.card-display').textContent = deck[0]
-  deck.shift()
 }
 
 const shuffle = () => {
@@ -42,5 +48,14 @@ const shuffle = () => {
   }
 }
 
+const dealCardToPlayer = () => {
+  const dealtCard = deck.shift()
+  document.querySelector('.player-display-1').textContent = dealtCard
+}
+const dealCardToDealer = () => {
+  const dealtCard = deck.shift()
+  document.querySelector('.dealer-display-1').textContent = dealtCard
+}
+
 document.addEventListener('DOMContentLoaded', main)
-document.querySelector('.button').addEventListener('click', drawCard)
+document.querySelector('.hit-button').addEventListener('click', makeDeck)
