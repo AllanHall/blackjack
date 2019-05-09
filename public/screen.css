@@ -10,3 +10,24 @@ body {
   margin: 0;
   min-height: 100%;
 }
+
+h1 {
+  text-align: center;
+}
+
+.card {
+  text-align: center;
+  margin-left: 40%;
+  margin-right: 40%;
+  min-height: 20rem;
+}
+
+.card-display {
+  text-align: center;
+}
+
+.button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
