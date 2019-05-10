@@ -15,10 +15,8 @@ const face = [
   { rank: 'Queen', value: 10 },
   { rank: 'King', value: 10 }
 ]
-/*
 const playerHand = []
 const dealerHand = []
-*/
 const main = () => {
   makeDeck()
   shuffle()
@@ -50,37 +48,58 @@ const shuffle = () => {
 
 const dealCardToPlayer1 = () => {
   const dealtCard = deck.shift()
+  playerHand.push().value
   document.querySelector('.player-display-1').textContent = dealtCard
 }
 const dealCardToPlayer2 = () => {
   const dealtCard = deck.shift()
+  playerHand.push().value
   document.querySelector('.player-display-2').textContent = dealtCard
 }
 const dealCardToDealer1 = () => {
   const dealtCard = deck.shift()
+  dealerHand.push().value
   document.querySelector('.dealer-display-1').textContent = dealtCard
 }
 const dealCardToDealer2 = () => {
   const dealtCard = deck.shift()
+  dealerHand.push().value
   document.querySelector('.dealer-display-2').textContent = dealtCard
 }
 const hit = () => {
-  const dealtCard = deck.shift()
-  document.querySelector('.hit-card-1').textContent = dealtCard
+  if (playerHand.value <= 21)
+    deck.pop()
+    playerHand.push().value
+    document.querySelector('.hit-cards').textContent = playerHand
+  else {
+    //put 'You win!' in the winner-display class
+  }
 }
 
 const stand = () => {
-  const dealtCard = deck.shift()
-  document.querySelector('.dealer-display-3').textContent = dealtCard
+  while (dealerHand.value <= 17) deck.pop()
+  dealerHand.push().value
+  document.querySelector('.stand-cards').textContent = dealerHand
 }
 
 const newHand = () => {
   main()
   document.querySelector('.winner-display').textContent = ' '
-  document.querySelector('.dealer-display-3').textContent = ' '
-  document.querySelector('.hit-card-1').textContent = ' '
+  document.querySelector('.stand-cards').textContent = ' '
+  document.querySelector('.hit-cards').textContent = ' '
 }
 
+const addPlayersValues = () => {
+  let sum = 0
+  for (f = 0; f < playerHand.length; f++)
+  sum += playerHand[f]
+}
+
+const addDealersValues = () => {
+  let bum = 0
+  for (g = 0; g < dealerHand.length; g++)
+  bum += dealerHand[g]
+}
 document.addEventListener('DOMContentLoaded', main)
 document.querySelector('.hit-button').addEventListener('click', makeDeck)
 document.querySelector('.reset-button').addEventListener('click', newHand)

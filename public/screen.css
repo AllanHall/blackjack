@@ -35,9 +35,16 @@ h1 {
 .dealer-display-1,
 .dealer-display-2,
 .dealer-display-3,
-.hit-card-1,
-.hit-card-2 {
+.hit-cards {
   text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 button {
