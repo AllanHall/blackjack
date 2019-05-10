@@ -22,10 +22,10 @@ const dealerHand = []
 const main = () => {
   makeDeck()
   shuffle()
-  dealCardToPlayer()
-  dealCardToPlayer()
-  dealCardToDealer()
-  dealCardToDealer()
+  dealCardToPlayer1()
+  dealCardToPlayer2()
+  dealCardToDealer1()
+  dealCardToDealer2()
 }
 
 const makeDeck = () => {
@@ -48,14 +48,41 @@ const shuffle = () => {
   }
 }
 
-const dealCardToPlayer = () => {
+const dealCardToPlayer1 = () => {
   const dealtCard = deck.shift()
   document.querySelector('.player-display-1').textContent = dealtCard
 }
-const dealCardToDealer = () => {
+const dealCardToPlayer2 = () => {
+  const dealtCard = deck.shift()
+  document.querySelector('.player-display-2').textContent = dealtCard
+}
+const dealCardToDealer1 = () => {
   const dealtCard = deck.shift()
   document.querySelector('.dealer-display-1').textContent = dealtCard
+}
+const dealCardToDealer2 = () => {
+  const dealtCard = deck.shift()
+  document.querySelector('.dealer-display-2').textContent = dealtCard
+}
+const hit = () => {
+  const dealtCard = deck.shift()
+  document.querySelector('.hit-card-1').textContent = dealtCard
+}
+
+const stand = () => {
+  const dealtCard = deck.shift()
+  document.querySelector('.dealer-display-3').textContent = dealtCard
+}
+
+const newHand = () => {
+  main()
+  document.querySelector('.winner-display').textContent = ' '
+  document.querySelector('.dealer-display-3').textContent = ' '
+  document.querySelector('.hit-card-1').textContent = ' '
 }
 
 document.addEventListener('DOMContentLoaded', main)
 document.querySelector('.hit-button').addEventListener('click', makeDeck)
+document.querySelector('.reset-button').addEventListener('click', newHand)
+document.querySelector('.hit-button').addEventListener('click', hit)
+document.querySelector('.stand-button').addEventListener('click', stand)

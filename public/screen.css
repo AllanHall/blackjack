@@ -22,7 +22,21 @@ h1 {
   min-height: 20rem;
 }
 
-.card-display {
+.players-cards,
+.dealers-cards {
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+.player-display-1,
+.player-display-2,
+.dealer-display-1,
+.dealer-display-2,
+.dealer-display-3,
+.hit-card-1,
+.hit-card-2 {
   text-align: center;
 }
 
