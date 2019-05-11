@@ -48,38 +48,49 @@ const shuffle = () => {
 
 const dealCardToPlayer1 = () => {
   const dealtCard = deck.shift()
-  playerHand.push().value
+  playerHand.push()
   document.querySelector('.player-display-1').textContent = dealtCard
 }
 const dealCardToPlayer2 = () => {
   const dealtCard = deck.shift()
-  playerHand.push().value
+  playerHand.push()
   document.querySelector('.player-display-2').textContent = dealtCard
 }
 const dealCardToDealer1 = () => {
   const dealtCard = deck.shift()
-  dealerHand.push().value
+  dealerHand.push()
   document.querySelector('.dealer-display-1').textContent = dealtCard
 }
 const dealCardToDealer2 = () => {
   const dealtCard = deck.shift()
-  dealerHand.push().value
+  dealerHand.push()
   document.querySelector('.dealer-display-2').textContent = dealtCard
 }
-const hit = () => {
-  if (playerHand.value <= 21)
-    deck.pop()
-    playerHand.push().value
-    document.querySelector('.hit-cards').textContent = playerHand
-  else {
-    //put 'You win!' in the winner-display class
-  }
+
+const PlayerValues = () => {
+  sum = 0
+  for (f = 0; f < playerHand.length; f++) sum += playerHand[f].value
 }
 
+const DealerValues = () => {
+  let bum = 0
+  for (g = 0; g < dealerHand.length; g++) bum += dealerHand[g].value
+}
+const hit = () => {
+  deck.pop()
+  playerHand.push()
+  document.querySelector('.hit-cards').textContent = playerHand
+  if (PlayerValues > 21) {
+    document.querySelector('.winner-display').innerHTML = 'You Bust!'
+  }
+}
 const stand = () => {
-  while (dealerHand.value <= 17) deck.pop()
-  dealerHand.push().value
+  deck.pop()
+  dealerHand.push()
   document.querySelector('.stand-cards').textContent = dealerHand
+  if (DealerValues > 21) {
+    document.querySelector('.winner-display').innerHTML = 'You Win!'
+  }
 }
 
 const newHand = () => {
@@ -89,17 +100,6 @@ const newHand = () => {
   document.querySelector('.hit-cards').textContent = ' '
 }
 
-const addPlayersValues = () => {
-  let sum = 0
-  for (f = 0; f < playerHand.length; f++)
-  sum += playerHand[f]
-}
-
-const addDealersValues = () => {
-  let bum = 0
-  for (g = 0; g < dealerHand.length; g++)
-  bum += dealerHand[g]
-}
 document.addEventListener('DOMContentLoaded', main)
 document.querySelector('.hit-button').addEventListener('click', makeDeck)
 document.querySelector('.reset-button').addEventListener('click', newHand)
