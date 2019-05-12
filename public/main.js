@@ -24,7 +24,6 @@ const main = () => {
   dealCardToPlayer2()
   dealCardToDealer1()
   dealCardToDealer2()
-  playGame()
 }
 
 const makeDeck = () => {
@@ -88,6 +87,7 @@ const hit = () => {
     document.querySelector('.winner-display').innerHTML = 'You Bust!'
   }
 }
+
 const stand = () => {
   if (dealerValues <= 17) {
     deck.pop()
@@ -115,6 +115,8 @@ const playGame = () => {
     document.querySelector('.winner-display').innerHTML = 'You Lose!'
   }
 }
+
+playGame()
 
 document.addEventListener('DOMContentLoaded', main)
 document.querySelector('.hit-button').addEventListener('click', makeDeck)
