@@ -24,6 +24,7 @@ const main = () => {
   dealCardToPlayer2()
   dealCardToDealer1()
   dealCardToDealer2()
+  playGame()
 }
 
 const makeDeck = () => {
@@ -67,13 +68,13 @@ const dealCardToDealer2 = () => {
   document.querySelector('.dealer-display-2').textContent = dealtCard
 }
 
-const PlayerValues = () => {
+const playerValues = () => {
   let sum = 0
   for (let f = 0; f < playerHand.length; f++) sum += playerHand[f].value
   return sum
 }
 
-const DealerValues = () => {
+const dealerValues = () => {
   let sum = 0
   for (let g = 0; g < dealerHand.length; g++) sum += dealerHand[g].value
   return sum
@@ -83,15 +84,17 @@ const hit = () => {
   deck.pop()
   playerHand.push()
   document.querySelector('.hit-cards').textContent = playerHand
-  if (PlayerValues > 21) {
+  if (playerValues > 21) {
     document.querySelector('.winner-display').innerHTML = 'You Bust!'
   }
 }
 const stand = () => {
-  deck.pop()
-  dealerHand.push()
-  document.querySelector('.stand-cards').textContent = dealerHand
-  if (DealerValues > 21) {
+  if (dealerValues <= 17) {
+    deck.pop()
+    dealerHand.push()
+    document.querySelector('.stand-cards').textContent = dealerHand
+  }
+  if (dealerValues > 21) {
     document.querySelector('.winner-display').innerHTML = 'You Win!'
   }
 }
@@ -101,6 +104,16 @@ const newHand = () => {
   document.querySelector('.winner-display').textContent = ' '
   document.querySelector('.stand-cards').textContent = ' '
   document.querySelector('.hit-cards').textContent = ' '
+}
+
+const playGame = () => {
+  hit()
+  stand()
+  if (playerValues > dealerValues) {
+    document.querySelector('.winner-display').innerHTML = 'You Win!'
+  } else {
+    document.querySelector('.winner-display').innerHTML = 'You Lose!'
+  }
 }
 
 document.addEventListener('DOMContentLoaded', main)

@@ -52,3 +52,8 @@ button {
   margin: 0 auto;
   margin-top: 1rem;
 }
+
+.winner-display {
+  text-align: center;
+  padding: 2rem;
+}
