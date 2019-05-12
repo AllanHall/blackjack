@@ -68,14 +68,17 @@ const dealCardToDealer2 = () => {
 }
 
 const PlayerValues = () => {
-  sum = 0
-  for (f = 0; f < playerHand.length; f++) sum += playerHand[f].value
+  let sum = 0
+  for (let f = 0; f < playerHand.length; f++) sum += playerHand[f].value
+  return sum
 }
 
 const DealerValues = () => {
-  let bum = 0
-  for (g = 0; g < dealerHand.length; g++) bum += dealerHand[g].value
+  let sum = 0
+  for (let g = 0; g < dealerHand.length; g++) sum += dealerHand[g].value
+  return sum
 }
+
 const hit = () => {
   deck.pop()
   playerHand.push()
