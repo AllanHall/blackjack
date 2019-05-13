@@ -30,14 +30,6 @@ h1 {
   margin-left: 25%;
   margin-right: 25%;
 }
-.player-display-1,
-.player-display-2,
-.dealer-display-1,
-.dealer-display-2,
-.dealer-display-3,
-.hit-cards {
-  text-align: center;
-}
 
 .buttons {
   display: flex;

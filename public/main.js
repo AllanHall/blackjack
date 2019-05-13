@@ -1,6 +1,6 @@
-const deck = []
-const suit = ['Hearts', 'Spades', 'Diamonds', 'Clubs']
-const face = [
+let deck = []
+const suit = ['hearts', 'spades', 'diamonds', 'clubs']
+const faces = [
   { rank: 'Ace', value: 11 },
   { rank: '2', value: 2 },
   { rank: '3', value: 3 },
@@ -15,21 +15,31 @@ const face = [
   { rank: 'Queen', value: 10 },
   { rank: 'King', value: 10 }
 ]
-const playerHand = []
-const dealerHand = []
+let playerHand = []
+let dealerHand = []
+let playerScore = 0
+let dealerScore = 0
+
 const main = () => {
   makeDeck()
   shuffle()
-  dealCardToPlayer1()
-  dealCardToPlayer2()
-  dealCardToDealer1()
-  dealCardToDealer2()
+  dealCardToPlayer()
+  dealCardToPlayer()
+  dealCardToDealer()
+  dealCardToDealer()
 }
 
 const makeDeck = () => {
+  deck = []
   for (let i = 0; i < suit.length; i++) {
-    for (let j = 0; j < face.length; j++) {
-      deck.push(face[j].rank + ' ' + 'of' + ' ' + suit[i])
+    for (let j = 0; j < faces.length; j++) {
+      const card = {
+        rank: faces[j].rank,
+        value: faces[j].value,
+        suit: suit[i],
+        imageUrl: './cards/' + faces[j].rank + '_of_' + suit[i] + '.svg'
+      }
+      deck.push(card)
     }
   }
 }
@@ -46,80 +56,74 @@ const shuffle = () => {
   }
 }
 
-const dealCardToPlayer1 = () => {
-  const dealtCard = deck.shift()
-  playerHand.push()
-  document.querySelector('.player-display-1').textContent = dealtCard
-}
-const dealCardToPlayer2 = () => {
-  const dealtCard = deck.shift()
-  playerHand.push()
-  document.querySelector('.player-display-2').textContent = dealtCard
-}
-const dealCardToDealer1 = () => {
-  const dealtCard = deck.shift()
-  dealerHand.push()
-  document.querySelector('.dealer-display-1').textContent = dealtCard
-}
-const dealCardToDealer2 = () => {
-  const dealtCard = deck.shift()
-  dealerHand.push()
-  document.querySelector('.dealer-display-2').textContent = dealtCard
+const dealCardToPlayer = () => {
+  const dealtCard = deck.pop()
+  playerHand.push(dealtCard)
+  const img = document.createElement('img')
+  img.src = dealtCard.imageUrl
+  document.querySelector('.player-display').appendChild(img)
+  playerScore += dealtCard.value
 }
 
-const playerValues = () => {
-  let sum = 0
-  for (let f = 0; f < playerHand.length; f++) sum += playerHand[f].value
-  return sum
+const dealCardToDealer = () => {
+  const dealtCard = deck.pop()
+  dealerHand.push(dealtCard)
+  const img = document.createElement('img')
+  img.src = './cards/black_joker.svg'
+  document.querySelector('.dealer-display').appendChild(img)
+  dealerScore += dealtCard.value
 }
 
-const dealerValues = () => {
-  let sum = 0
-  for (let g = 0; g < dealerHand.length; g++) sum += dealerHand[g].value
-  return sum
+const showDealerHand = () => {
+  document.querySelector('.dealer-display').textContent = ''
+  for (let i = 0; i < dealerHand.length; i++) {
+    const card = dealerHand[i]
+    const img = document.createElement('img')
+    img.src = card.imageUrl
+    document.querySelector('.dealer-display').appendChild(img)
+  }
 }
 
 const hit = () => {
-  deck.pop()
-  playerHand.push()
-  document.querySelector('.hit-cards').textContent = playerHand
-  if (playerValues > 21) {
-    document.querySelector('.winner-display').innerHTML = 'You Bust!'
+  dealCardToPlayer()
+  if (playerScore > 21) {
+    document.querySelector('.winner-display').textContent = 'You Bust!'
   }
 }
 
 const stand = () => {
-  if (dealerValues <= 17) {
-    deck.pop()
-    dealerHand.push()
-    document.querySelector('.stand-cards').textContent = dealerHand
+  showDealerHand()
+  // eslint-disable-next-line no-unmodified-loop-condition
+  while (dealerScore < 17) {
+    dealCardToDealer()
+    showDealerHand()
   }
-  if (dealerValues > 21) {
-    document.querySelector('.winner-display').innerHTML = 'You Win!'
+  if (dealerScore > 21) {
+    document.querySelector('.winner-display').textContent = 'You Win!'
+  } else if (playerScore > 21) {
+    document.querySelector('.winner-display').textContent = 'You Bust!'
+  } else if (playerScore === dealerScore) {
+    document.querySelector('.winner-display').textContent = 'Its a push!'
+  } else {
+    if (playerScore > dealerScore) {
+      document.querySelector('.winner-display').textContent = 'You Win!'
+    } else document.querySelector('.winner-display').textContent = 'You Lose!'
   }
 }
 
 const newHand = () => {
-  main()
+  deck = []
+  playerHand = []
+  playerScore = 0
+  dealerHand = []
+  dealerScore = 0
   document.querySelector('.winner-display').textContent = ' '
-  document.querySelector('.stand-cards').textContent = ' '
-  document.querySelector('.hit-cards').textContent = ' '
+  document.querySelector('.player-display').textContent = ' '
+  document.querySelector('.dealer-display').textContent = ' '
+  main()
 }
-
-const playGame = () => {
-  hit()
-  stand()
-  if (playerValues > dealerValues) {
-    document.querySelector('.winner-display').innerHTML = 'You Win!'
-  } else {
-    document.querySelector('.winner-display').innerHTML = 'You Lose!'
-  }
-}
-
-playGame()
 
 document.addEventListener('DOMContentLoaded', main)
-document.querySelector('.hit-button').addEventListener('click', makeDeck)
 document.querySelector('.reset-button').addEventListener('click', newHand)
 document.querySelector('.hit-button').addEventListener('click', hit)
 document.querySelector('.stand-button').addEventListener('click', stand)
